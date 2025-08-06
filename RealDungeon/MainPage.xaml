@@ -4,6 +4,56 @@
              xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
              x:Class="RealDungeon.MainPage">
 
-    <maps:Map x:Name="map" />
+    <Grid x:Name="mapGrid" RowDefinitions="*, *" RowSpacing="10" Padding="10">
+
+        <maps:Map x:Name="map" Grid.Row="0" />
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout>
+                <Label Text="Nastavení typu mapy:" FontAttributes="Bold" />
+                <Picker x:Name="mapTypePicker" Title="Typ mapy" SelectedIndexChanged="MapTypePicker_SelectedIndexChanged">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Ulice (Street)</x:String>
+                            <x:String>Satelitní (Satellite)</x:String>
+                            <x:String>Hybridní (Hybrid)</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+
+                <Label Text="Zvolte přesnost GPS:" />
+                <Picker x:Name="accuracyPicker">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Nejnižší (Lowest)</x:String>
+                            <x:String>Nízká (Low)</x:String>
+                            <x:String>Střední (Medium)</x:String>
+                            <x:String>Vysoká (High)</x:String>
+                            <x:String>Nejlepší (Best)</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+                <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                    <Label Text="Zapnout sledování polohy:" VerticalOptions="Center"/>
+                    <Switch x:Name="trackingSwitch" Toggled="TrackingSwitch_Toggled" />
+                </HorizontalStackLayout>
+                <Button Text="Načíst moji polohu" Clicked="RecenterMap_Clicked" />
+
+                <BoxView HeightRequest="3" Color="Gray" />
+                <Entry x:Name="addressEntry" Placeholder="Zadejte adresu pro vyhledání" />
+                <Button Text="Najít adresu a přidat značku" Clicked="Geocode_Clicked" />
+                <BoxView HeightRequest="3" Color="Gray" />
+                <Button Text="Zjistit adresu středu mapy" Clicked="ReverseGeocode_Clicked" />
+                <BoxView HeightRequest="3" Color="Gray" />
+                <Button Text="Přidat značku na střed mapy" Clicked="AddPinToMapCenter_Clicked" />
+                <Button Text="Přidat značku na moji polohu" Clicked="AddPin_Clicked" />
+                <Button Text="Smazat všechny značky" Clicked="ClearPins_Clicked" />
+
+                <Button Text="Přidat bod do trasy a vykreslit čáru" Clicked="AddRoutePoint_Clicked" />
+                <Button Text="Vykreslit polygon z bodů trasy" Clicked="DrawPolygon_Clicked" />
+                <Button Text="Smazat kresbu (čáry a polygony)" Clicked="ClearDrawing_Clicked" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
 
 </ContentPage>
